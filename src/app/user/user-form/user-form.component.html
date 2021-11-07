@@ -1,0 +1,119 @@
+<div class="ui form">
+  <div class="two fields">
+    <div class="field">
+      <!-- <div class="field error"> -->
+      <label>Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Username"
+        [(ngModel)]="userDetail.username"
+        #username="ngModel"
+        required
+      />
+      <small
+        class="error"
+        *ngIf="username.invalid && (isFormSubmitted || username.touched)"
+      >
+        {{ required_field_Error }}</small
+      >
+    </div>
+    <div class="field">
+      <label>E-mail</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="joe@schmoe.com"
+        class=""
+        [(ngModel)]="userDetail.email"
+        [disabled]="userId"
+        #email="ngModel"
+        required
+        [pattern]="emailValidator"
+      />
+      <small
+        class="error display-block"
+        *ngIf="email.invalid && (isFormSubmitted || email.touched)"
+      >
+        {{ required_field_Error }}</small
+      >
+      <small class="error" *ngIf="email.invalid && email.dirty && email.value">
+        {{ incorrect_email_Error }}</small
+      >
+    </div>
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Password"
+      [(ngModel)]="userDetail.password"
+      #password="ngModel"
+      required
+      [pattern]="PASSWORD_VALIDATOR"
+    />
+    <small
+      [ngClass]="
+        password.value.length >= 6
+          ? 'correct display-block'
+          : 'error display-block'
+      "
+      >{{ "Should be longer than 6 charaters" }}</small
+    >
+    <small
+      [ngClass]="
+        password.value.match(A_UPPERCASE)
+          ? 'correct display-block'
+          : 'error display-block'
+      "
+      >{{ "Should contain at least one uppercase character" }}</small
+    >
+    <small
+      [ngClass]="
+        password.value.match(A_LOWERCASE)
+          ? 'correct display-block'
+          : 'error display-block'
+      "
+      >{{ "Should contain at least one lowercase character" }}</small
+    >
+    <small
+      [ngClass]="
+        password.value.match(A_NUMBER)
+          ? 'correct display-block'
+          : 'error display-block'
+      "
+      >{{ "Should contain at least one number" }}</small
+    >
+    <small
+      [ngClass]="
+        password.value.match(A_SPECIAL_CHARACTER)
+          ? 'correct display-block'
+          : 'error display-block'
+      "
+    >
+      {{ "Should contain at least one special character" }}
+    </small>
+  </div>
+  <ng-container *ngIf="userId">
+    <button
+      [disabled]="loading"
+      (click)="formSubmitted()"
+      class="ui submit button"
+    >
+      Update
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!userId">
+    <button
+      [disabled]="loading"
+      (click)="formSubmitted()"
+      class="ui submit button"
+    >
+      Create
+    </button>
+  </ng-container>
+</div>
