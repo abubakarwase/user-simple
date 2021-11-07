@@ -20,5 +20,8 @@
         ></i>
       </td>
     </tr>
+    <tr *ngIf="users.length == 0">
+      <td>No users found.</td>
+    </tr>
   </tbody>
 </table>

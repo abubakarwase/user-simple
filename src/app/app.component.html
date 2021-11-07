@@ -1,7 +1,19 @@
 <div class="ui container">
   <div class="ui secondary pointing menu">
-    <a routerLink="/" class="item">Listing</a>
-    <a routerLink="/create" class="item">Create</a>
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="item"
+      >Listing</a
+    >
+    <a
+      routerLink="/create"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="item"
+      >Create</a
+    >
   </div>
   <div class="ui segment segment-overflow">
     <router-outlet></router-outlet>
