@@ -13,10 +13,14 @@
       <td>{{ user.username }}</td>
       <td type="password">{{ user.password }}</td>
       <td>
-        <i [routerLink]="['/detail', user.email]" class="edit outline icon"> </i
-        ><i
+        <i
+          [routerLink]="['/detail', user.email]"
+          class="edit outline icon cursor-pointer"
+        >
+        </i>
+        <i
           (click)="deleteUser(user.email)"
-          class="trash alternate outline icon"
+          class="trash alternate outline icon cursor-pointer"
         ></i>
       </td>
     </tr>

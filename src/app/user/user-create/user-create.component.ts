@@ -15,6 +15,7 @@ export class UserCreateComponent implements OnInit {
 
   async submitted(userDetail: User) {
     try {
+      // keeping the emails unique
       const isFound = localStorage.getItem(userDetail.email);
       if (isFound) {
         return this.toastr.error('This user already exists', 'Error');

@@ -19,7 +19,7 @@ export class UserDetailComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private _route: ActivatedRoute, private toastr: ToastrService) {
-    this.userId = this._route.snapshot.params['id'];
+    this.userId = this._route.snapshot.params['id']; // obtaining user id from the params
   }
 
   ngOnInit() {
@@ -27,13 +27,14 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser() {
-    this.userDetail = JSON.parse(localStorage.getItem(this.userId) || '{}');
+    let user = JSON.parse(localStorage.getItem(this.userId) || '{}');
+    if (!user.email) this.toastr.error('No user found, wrong id', 'Error');
+    else this.userDetail = user;
   }
 
   update(user: User) {
     try {
       this.loading = true;
-      // const { username, email, password } = user;
       localStorage.removeItem(user.email);
       localStorage.setItem(user.email, JSON.stringify(user));
       this.toastr.success('User updated successfully');

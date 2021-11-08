@@ -51,13 +51,17 @@ export class UserFormComponent implements OnInit {
       this.userDetail.username = this.userDetail.username.trim();
       this.userDetail.email = this.userDetail.email.toLowerCase().trim();
       this.userDetail.password = this.userDetail.password.trim();
+
+      // validating user data
       if (
         this.userDetail.username.length === 0 ||
         !this.userDetail.email.match(this.emailValidator) ||
         !this.userDetail.password.match(this.PASSWORD_VALIDATOR)
       ) {
+        // if wrong then stop user from adding it to the local storage
         this.toastr.error('Some fields might have incorrect data', 'Error');
       } else {
+        // here we are re-using form for the create and update user based on the id
         this.userId
           ? this.updateUser.emit(this.userDetail)
           : this.createUser.emit(this.userDetail);

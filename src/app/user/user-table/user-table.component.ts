@@ -18,19 +18,19 @@ export class UserTableComponent implements OnInit {
   }
 
   getAllUsers() {
-    const items = { ...localStorage };
+    const items = { ...localStorage }; // getting all entries from local storage
     for (const [key, value] of Object.entries(items)) {
-      this.users.push(JSON.parse(value));
+      this.users.push(JSON.parse(value)); // pushing them into the array for using in a list
     }
   }
 
   async deleteUser(email: string) {
     try {
-      let response = await confirmCancelButton();
+      let response = await confirmCancelButton(); // wait for the response from modal
       if (response === true) {
         localStorage.removeItem(email);
-        this.users = [];
-        this.getAllUsers();
+        this.users = []; // flushing the user list
+        this.getAllUsers(); // loading updated users in the list
         return this.toastr.success('User deleted');
       }
       return;
