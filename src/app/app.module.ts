@@ -7,6 +7,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorComponenet } from './error/error.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [AppComponent, ErrorComponenet],
@@ -17,7 +18,7 @@ import { ErrorComponenet } from './error/error.component';
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

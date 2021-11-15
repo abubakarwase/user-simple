@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,7 +19,11 @@ export class UserDetailComponent implements OnInit {
   isFormSubmitted: Boolean = false;
   loading: boolean = false;
 
-  constructor(private _route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(
+    private _route: ActivatedRoute,
+    private toastr: ToastrService,
+    private UserService: UserService
+  ) {
     this.userId = this._route.snapshot.params['id']; // obtaining user id from the params
   }
 
@@ -27,7 +32,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser() {
-    let user = JSON.parse(localStorage.getItem(this.userId) || '{}');
+    let user: User = this.UserService.getUser(this.userId);
     if (!user.email) this.toastr.error('No user found, wrong id', 'Error');
     else this.userDetail = user;
   }
@@ -35,8 +40,7 @@ export class UserDetailComponent implements OnInit {
   update(user: User) {
     try {
       this.loading = true;
-      localStorage.removeItem(user.email);
-      localStorage.setItem(user.email, JSON.stringify(user));
+      this.UserService.updateUser(user);
       this.toastr.success('User updated successfully');
       this.loading = false;
     } catch (err: any) {

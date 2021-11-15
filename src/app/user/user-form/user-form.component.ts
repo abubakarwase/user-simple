@@ -43,7 +43,7 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  async formSubmitted() {
+  formSubmitted() {
     try {
       this.isFormSubmitted = true;
       this.loading = true;

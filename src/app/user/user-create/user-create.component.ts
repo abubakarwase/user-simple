@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-create',
@@ -9,18 +10,22 @@ import { User } from 'src/app/interfaces/user.interface';
   styleUrls: ['./user-create.component.scss'],
 })
 export class UserCreateComponent implements OnInit {
-  constructor(private toastr: ToastrService, private router: Router) {}
+  constructor(
+    private toastr: ToastrService,
+    private router: Router,
+    private UserService: UserService
+  ) {}
 
   ngOnInit() {}
 
-  async submitted(userDetail: User) {
+  submitted(userDetail: User) {
     try {
       // keeping the emails unique
-      const isFound = localStorage.getItem(userDetail.email);
-      if (isFound) {
+      const isFound = this.UserService.getUser(userDetail.email);
+      if (isFound.email) {
         return this.toastr.error('This user already exists', 'Error');
       }
-      localStorage.setItem(userDetail.email, JSON.stringify(userDetail));
+      this.UserService.createUser(userDetail);
       this.router.navigate(['/']);
       return this.toastr.success('User created successfully');
     } catch (err: any) {
